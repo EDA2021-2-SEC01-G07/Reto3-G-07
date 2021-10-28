@@ -18,3 +18,6 @@ def newCatalog():
 
 def addCatalog(catalog, sighting):
     pass
+
+def addSighting():
+    pass
