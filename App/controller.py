@@ -23,6 +23,7 @@
 import config as cf
 import model
 import csv
+import model.catalog as ct
 
 
 """
