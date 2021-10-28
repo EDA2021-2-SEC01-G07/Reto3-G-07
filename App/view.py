@@ -24,6 +24,7 @@ import config as cf
 import sys
 import controller
 from DISClib.ADT import list as lt
+import prettytable as pt
 assert cf
 
 
@@ -55,6 +56,22 @@ while True:
     entry = int(input('Seleccione una opción para continuar\n'))
     if entry == 1:
         print("Cargando información de los archivos ....")
+        catalog = controller.newCatalog()
+        controller.loadData(catalog)
+        print('El total de avistamientos cargados es de :',str(lt.size(catalog['sightings'])))
+        table=pt.PrettyTable(hrules=pt.ALL)
+        table.field_names=['DateTime','City','State','Country','Shape','Duration(sec)','Duration(h)','Comments','Date Posted', 'Latitude','Longitude']
+        total=lt.subList(catalog['sightings'],1,5)
+        last=lt.subList(catalog['sightings'],lt.size(catalog['sightings'])-4,5)
+
+        for a in lt.iterator(last):
+            lt.addLast(total,a)
+        table._max_width={'DateTime':30,'City':10,'State':10,'Country':10,'Shape':10,'Duration(sec)':10,'Duration(h)':10,'Comments':30,'Date Posted':30, 'Latitude':30,'Longitude':30}
+        
+        for row in lt.iterator(total):
+            table.add_row([row['datetime'],row['city'],row['state'],row['country'],row['shape'],row['duration (seconds)'],row['duration (hours/min)'],row['comments'],row['date posted'], row['latitude'],row['longitude']])
+        print('Primeros y ultimos 5 avistamientos son: \n')
+        print(table)
     elif entry == 2:
         pass
     elif entry == 3:

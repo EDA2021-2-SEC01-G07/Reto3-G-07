@@ -21,7 +21,6 @@
  """
 
 import config as cf
-import model
 import csv
 import model.catalog as ct
 
@@ -42,10 +41,11 @@ def loadData(catalog):
     Carga los datos de los archivos y cargar los datos en la
     estructura de datos
     """
-    ufofile = cf.data_dir + 'UFOS-utf8-small'
+    ufofile = cf.data_dir + 'UFOS-utf8-small.csv'
     input_file = csv.DictReader(open(ufofile, encoding='utf-8'))
     for sighting in input_file:
         ct.addSighting(catalog, sighting)
+    return catalog
 
 # Funciones de ordenamiento
 
