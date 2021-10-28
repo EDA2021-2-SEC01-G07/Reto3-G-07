@@ -23,5 +23,17 @@ def addCatalog(catalog, sighting):
     pass
 
 def addSighting(catalog, sighting):
-    lt.addLast(catalog['sightings'],sighting)
+    lt.addLast(catalog['sightings'], sighting)
+
+    cities = catalog['cities']
+    entry = om.get(cities, sighting["city"])
+    array = None
+
+    if entry != None:
+        array = me.getValue(entry)
+    else:
+        array = lt.newList()
+        om.put(cities, sighting["city"], array)
+        
+    lt.addLast(array, sighting)
     return catalog
