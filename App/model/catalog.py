@@ -9,9 +9,12 @@ assert cf
 
 def newCatalog():
     catalog = {
-        "cities": om.newMap(comparefunction=cp.compareCities),
-        "duration": om.newMap(comparefunction=cp.compareDurations),
+        "cities": om.newMap(comparefunction=cp.comparePrimitives),
+        "duration": om.newMap(comparefunction=cp.comparePrimitives),
         "hours": om.newMap(comparefunction=cp.compareHours),
+        "dates": om.newMap(comparefunction=cp.compareDates),
+        "latitude": om.newMap(comparefunction=cp.comparePrimitives),
+        "longitude": om.newMap(comparefunction=cp.comparePrimitives),
         "sightings": lt.newList(datastructure='ARRAY_LIST')
     }
     return catalog
