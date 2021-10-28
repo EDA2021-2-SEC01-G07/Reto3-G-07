@@ -25,6 +25,7 @@ import sys
 import controller
 from DISClib.ADT import list as lt
 import prettytable as pt
+from DISClib.ADT import orderedmap as om
 assert cf
 
 
@@ -38,12 +39,12 @@ operación solicitada
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- Avistamientos por ciudad")
-    print("3- Avistamientos por duracion")
-    print("4- Avistamientos por hora/minuto del dia")
-    print("5- Avistamientos por rango de fechas")
-    print("6- Avistamientos por zona geografia")
-    print("7- Visualizar avistamientos de una zona geografica")
+    print("2- (Req1) Avistamientos por ciudad")
+    print("3- (Req2) Avistamientos por duracion")
+    print("4- (Req3) Avistamientos por hora/minuto del dia")
+    print("5- (Req4) Avistamientos por rango de fechas")
+    print("6- (Req5) Avistamientos por zona geografia")
+    print("7- (Req6) Visualizar avistamientos de una zona geografica")
     print("")
 
 catalog = None
@@ -73,6 +74,8 @@ while True:
         print('Primeros y ultimos 5 avistamientos son: \n')
         print(table)
     elif entry == 2:
+        print('La altura del arbol es: ',str(om.height(catalog['cities'])))
+        print('El tamaño del arbol es de :',str(om.size(catalog['cities'])))
         pass
     elif entry == 3:
         pass
