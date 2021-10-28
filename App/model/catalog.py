@@ -18,3 +18,9 @@ def newCatalog():
         "sightings": lt.newList(datastructure='ARRAY_LIST')
     }
     return catalog
+
+def addCatalog(catalog, sighting):
+    pass
+
+def addSighting():
+    pass
