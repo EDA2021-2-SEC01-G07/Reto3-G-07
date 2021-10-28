@@ -52,11 +52,16 @@ Menu principal
 """
 while True:
     printMenu()
-    inputs = input('Seleccione una opción para continuar\n')
-    if int(inputs[0]) == 1:
+    entry = int(input('Seleccione una opción para continuar\n'))
+    if entry == 1:
         print("Cargando información de los archivos ....")
-
-    elif int(inputs[0]) == 2:
+    elif entry == 2:
+        pass
+    elif entry == 3:
+        pass
+    elif entry == 4:
+        pass
+    elif entry == 5:
         pass
 
     else:
