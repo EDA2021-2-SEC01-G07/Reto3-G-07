@@ -18,20 +18,21 @@ def getDurationRange(catalog,inf,sup):
     match=lt.newList(datastructure='ARRAY_LIST')
     for sight in lt.iterator(duration_range):
         totsights+=lt.size(sight)
-        if counter<3:
-            for a in lt.iterator(sight):
-                lt.addLast(match,a)
-                counter+=1
+        for a in lt.iterator(sight):
+            if counter>3:
+                continue
+            lt.addLast(match,a)
+            counter+=1
 
     #Este codigo si bien es mas largo, es mas eficiente. La eficiencia se nota mas si el rango de busqueda es muy grande.
     keyset=om.keys(duration,inf,sup)
-    lastIndex=om.get(duration,lt.getElement(keyset,lt.size(keyset)))['value']
+    lastIndex=om.get(duration,lt.lastElement(keyset))['value']
     last=lt.newList(datastructure='SINGLE_LINKED')
     while lt.size(last)<3: #SOLO en el caso donde la ultima llave no tenga 3 avistamientos, se recorre para atras las llaves
         for a in lt.iterator(lastIndex):
             if lt.size(last)==3:
                 continue
-            lt.addFirst(last,a) #
+            lt.addFirst(last,a) 
         lastIndex=om.get(duration,lt.getElement(keyset,lt.size(keyset)-1))['value']
     for a in lt.iterator(last):
         lt.addLast(match,a)
