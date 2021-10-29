@@ -23,9 +23,11 @@
 import config as cf
 import sys
 import controller
+import time
 from DISClib.ADT import list as lt
 import prettytable as pt
 from DISClib.ADT import orderedmap as om
+from prettytable import PrettyTable
 assert cf
 
 
@@ -73,14 +75,42 @@ while True:
             table.add_row([row['datetime'],row['city'],row['state'],row['country'],row['shape'],row['duration (seconds)'],row['duration (hours/min)'],row['comments'],row['date posted'], row['latitude'],row['longitude']])
         print('Primeros y ultimos 5 avistamientos son: \n')
         print(table)
+        
     elif entry == 2:
         print('La altura del arbol es: ',str(om.height(catalog['cities'])))
         print('El tamaño del arbol es de :',str(om.size(catalog['cities'])))
         pass
     elif entry == 3:
-        pass
+        inf=float(input('Limite inferior de la duracion del avistamiento: '))
+        sup=float(input('Limite superior de la duracion del avistamiento: '))
+        start_time = time.process_time()
+        result=controller.getDurationRange(catalog,inf,sup)
+        duration=catalog['duration']
+        print('='*15,'Req No. 2 Inputs','='*15)
+        print('UFO sightings between', inf,'and',sup,'\n')
+        print('='*15,'Req No. 2 Answers','='*15)
+        print('There are',int(lt.size(om.keySet(duration))),'diferent durations of UFO sightings...')
+        print('The longest UFO sightings are:')
+        longest=om.maxKey(duration)
+        longest_count=lt.size(om.get(duration,longest)['value'])
+        end_time=(time.process_time() - start_time)*1000
+        table1=PrettyTable(hrules=pt.ALL)
+        table1.field_names = ['Duration (seconds)','Count']
+        table1.add_row([longest,longest_count])
+        print(table1)
+        print('\nThere are',str(result[0]),'sightings between', inf,'and',sup)
+        print('The first 3 and last 3 UFO sightings in the duration time are:')
+        table2=PrettyTable(hrules=pt.ALL)
+        table2.field_names = ['DateTime','City','State','Country','Shape','Duration (seconds)']
+        for row in lt.iterator(result[1]):
+            table2.add_row([row['datetime'],row['city'],row['state'],row['country'],row['shape'],row['duration (seconds)']])
+        table2._max_width={'DateTime':30,'City':30,'State':30,'Country':30,'Shape':30,'Duration (seconds)':30}
+        print(table2)
+        print("The processing time is: ",end_time, " ms.")
     elif entry == 4:
         pass
+
+
     elif entry == 5:
         pass
 

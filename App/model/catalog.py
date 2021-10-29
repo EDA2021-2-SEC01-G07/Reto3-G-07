@@ -9,12 +9,12 @@ assert cf
 
 def newCatalog():
     catalog = {
-        "cities": om.newMap(comparefunction=cp.comparePrimitives),
-        "duration": om.newMap(comparefunction=cp.comparePrimitives),
-        "hours": om.newMap(comparefunction=cp.compareHours),
-        "dates": om.newMap(comparefunction=cp.compareDates),
-        "latitude": om.newMap(comparefunction=cp.comparePrimitives),
-        "longitude": om.newMap(comparefunction=cp.comparePrimitives),
+        "cities": om.newMap(omaptype='RDT',comparefunction=cp.comparePrimitives),
+        "duration": om.newMap(omaptype='RDT',comparefunction=cp.comparePrimitives),
+        "hours": om.newMap(omaptype='RDT',comparefunction=cp.compareHours),
+        "dates": om.newMap(omaptype='RDT',comparefunction=cp.compareDates),
+        "latitude": om.newMap(omaptype='RDT',comparefunction=cp.comparePrimitives),
+        "longitude": om.newMap(omaptype='RDT',comparefunction=cp.comparePrimitives),
         "sightings": lt.newList(datastructure='ARRAY_LIST')
     }
     return catalog
@@ -28,7 +28,6 @@ def addSighting(catalog, sighting):
     cities = catalog['cities']
     entry = om.get(cities, sighting["city"])
     array = None
-
     if entry != None:
         array = me.getValue(entry)
     else:
@@ -36,4 +35,23 @@ def addSighting(catalog, sighting):
         om.put(cities, sighting["city"], array)
         
     lt.addLast(array, sighting)
+    
+    updateDurationIndex(catalog['duration'],sighting )
     return catalog
+
+def updateDurationIndex(map, sighting):
+    """
+    Se toma la duracion del avistamiento y se busca si ya existe dentro del arbol.
+    En caso de que si se adiciona a su su lista de avistamientos y se actualiza el indice.
+
+    En caso de que no, crea el nodo y actualiza el indice de tipo duracion.
+    """
+    duration=float(sighting['duration (seconds)'])
+    entry = om.get(map, duration)
+    if entry != None:
+        duration_entry = me.getValue(entry)
+    else:
+        duration_entry = lt.newList(datastructure="ARRAY_LIST")
+        om.put(map, duration, duration_entry)
+    lt.addLast(duration_entry,sighting)
+    return map
