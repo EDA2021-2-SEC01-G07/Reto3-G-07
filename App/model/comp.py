@@ -1,7 +1,7 @@
 
 def compareDates(datetime1, datetime2)->int:
-    date1 = datetime1.date()
-    date2 = datetime2.date()
+    date1 = datetime1
+    date2 = datetime2
     if (date1 == date2):
         return 0
     elif (date1 > date2):

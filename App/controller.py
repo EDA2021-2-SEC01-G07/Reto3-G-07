@@ -24,7 +24,8 @@ import config as cf
 import csv
 import model.catalog as ct
 import model.req2 as rq2
-
+import model.req4 as rq4
+import datetime
 """
 El controlador se encarga de mediar entre la vista y el modelo.
 """
@@ -42,7 +43,7 @@ def loadData(catalog):
     Carga los datos de los archivos y cargar los datos en la
     estructura de datos
     """
-    ufofile = cf.data_dir + 'UFOS-utf8-large.csv'
+    ufofile = cf.data_dir + 'UFOS-utf8-small.csv'
     input_file = csv.DictReader(open(ufofile, encoding='utf-8'))
     for sighting in input_file:
         ct.addSighting(catalog, sighting)
@@ -53,3 +54,8 @@ def loadData(catalog):
 # Funciones de consulta sobre el catálogo
 def getDurationRange(catalog,inf,sup):
     return rq2.getDurationRange(catalog,inf,sup)
+
+def getDateRange(catalog,sup,inf):
+    initial = datetime.datetime.strptime(sup, '%Y-%m-%d').date()
+    final = datetime.datetime.strptime(inf, '%Y-%m-%d').date()
+    return rq4.getDateRange(catalog,initial,final)

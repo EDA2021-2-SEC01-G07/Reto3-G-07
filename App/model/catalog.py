@@ -5,6 +5,7 @@ from DISClib.DataStructures import mapentry as me
 from DISClib.Algorithms.Sorting import shellsort as sa
 from DISClib.ADT import orderedmap as om
 import model.comp as cp
+import datetime
 assert cf
 
 def newCatalog():
@@ -37,6 +38,7 @@ def addSighting(catalog, sighting):
     lt.addLast(array, sighting)
     
     updateDurationIndex(catalog['duration'],sighting )
+    updateDateIndex(catalog['dates'],sighting)
     return catalog
 
 def updateDurationIndex(map, sighting):
@@ -54,4 +56,22 @@ def updateDurationIndex(map, sighting):
         duration_entry = lt.newList(datastructure="ARRAY_LIST")
         om.put(map, duration, duration_entry)
     lt.addLast(duration_entry,sighting)
+    return map
+
+def updateDateIndex(map,sighting):
+    """
+    Se toma solo el dia del avistamiento y se busca si ya existe dentro del arbol.
+    En caso de que si se adiciona a su su lista de avistamientos y se actualiza el indice.
+
+    En caso de que no, crea el nodo y actualiza el indice de tipo date.
+    """
+    ufodatetime=sighting['datetime']
+    ufodate= datetime.datetime.strptime(ufodatetime, '%Y-%m-%d %H:%M:%S')
+    entry = om.get(map,ufodate.date())
+    if entry != None:
+        date_entry=me.getValue(entry)
+    else:
+        date_entry = lt.newList(datastructure="ARRAY_LIST")
+        om.put(map, ufodate.date(), date_entry)
+    lt.addLast(date_entry,sighting)
     return map
