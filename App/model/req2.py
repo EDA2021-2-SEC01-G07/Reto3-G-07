@@ -11,7 +11,6 @@ def getDurationRange(catalog,inf,sup):
     """
     """
     duration=catalog['duration']
-    
     duration_range=om.values(duration,inf,sup)
     totsights=0
     counter=1
@@ -23,8 +22,8 @@ def getDurationRange(catalog,inf,sup):
                 continue
             lt.addLast(match,a)
             counter+=1
-
     #Este codigo si bien es mas largo, es mas eficiente. La eficiencia se nota mas si el rango de busqueda es muy grande.
+    #Usar om.valueSet() seria mas largo pues es de todo el arbol
     keyset=om.keys(duration,inf,sup)
     lastIndex=om.get(duration,lt.lastElement(keyset))['value']
     last=lt.newList(datastructure='SINGLE_LINKED')

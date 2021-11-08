@@ -15,6 +15,8 @@ def getCitySightings(catalog,city):
     Return:
     total: Cantidad de avistamientos
     joined: Lista con los primeros y ultimos 3 avistamientos.
+    max_sightings: La cantidad mas alta de avistamientos
+    max_city: La ciudad con mayor cantidad de avistamientos.
     """
     cities=catalog['cities']
     keyset=om.keySet(cities)
@@ -22,6 +24,7 @@ def getCitySightings(catalog,city):
     match=lt.newList(datastructure='ARRAY_LIST')
     max_sightings=0
     max_city=""
+    #Para obtener la ciudad con mas cantidad de avistamientos toca recorrer todo el arbol.
     for c in lt.iterator(keyset):
         city_sightings=lt.size(om.get(cities, c)['value'])
         if city_sightings>max_sightings:
@@ -32,7 +35,8 @@ def getCitySightings(catalog,city):
         lt.addLast(match,sight)
     total=lt.size(match)
     ms.sort(match,compareDateTime)
-
+    
+    #Hacer la lista en caso de que halla mas que 6
     if total>6:
         joined=lt.subList(match,1,3)
         last=lt.subList(match,total-3,3)
