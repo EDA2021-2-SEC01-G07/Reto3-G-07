@@ -20,8 +20,7 @@ def newCatalog():
     }
     return catalog
 
-def addCatalog(catalog, sighting):
-    pass
+
 
 def addSighting(catalog, sighting):
     lt.addLast(catalog['sightings'], sighting)

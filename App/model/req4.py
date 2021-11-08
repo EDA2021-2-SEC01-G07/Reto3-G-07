@@ -28,12 +28,14 @@ def getDateRange(catalog,initial,final):
     keyset=om.keys(dates,initial,final)
     lastIndex=om.get(dates,lt.lastElement(keyset))['value']
     last=lt.newList(datastructure='SINGLE_LINKED')
+    reverse_key=1
     while lt.size(last)<3: #SOLO en el caso donde la ultima llave no tenga 3 avistamientos, se recorre para atras las llaves
         for a in lt.iterator(lastIndex):
             if lt.size(last)==3:
                 continue
             lt.addFirst(last,a) 
-        lastIndex=om.get(dates,lt.getElement(keyset,lt.size(keyset)-1))['value']
+        lastIndex=om.get(dates,lt.getElement(keyset,lt.size(keyset)-reverse_key))['value']
+        reverse_key+=1
     for a in lt.iterator(last):
         lt.addLast(match,a)
 

@@ -60,8 +60,10 @@ while True:
     entry = int(input('Seleccione una opción para continuar\n'))
     if entry == 1:
         print("Cargando información de los archivos ....")
+        start_time = time.process_time()
         catalog = controller.newCatalog()
         controller.loadData(catalog)
+        end_time=(time.process_time() - start_time)*1000
         print('El total de avistamientos cargados es de :',str(lt.size(catalog['sightings'])))
         table=pt.PrettyTable(hrules=pt.ALL)
         table.field_names=['DateTime','City','State','Country','Shape','Duration(sec)','Duration(h)','Comments','Date Posted', 'Latitude','Longitude']
@@ -70,16 +72,42 @@ while True:
 
         for a in lt.iterator(last):
             lt.addLast(total,a)
-        table._max_width={'DateTime':30,'City':10,'State':10,'Country':10,'Shape':10,'Duration(sec)':10,'Duration(h)':10,'Comments':20,'Date Posted':30, 'Latitude':20,'Longitude':20}
+        table._max_width={'DateTime':30,'City':10,'State':10,'Country':10,'Shape':10,'Duration(sec)':10,'Duration(h)':10,'Comments':20,'Date Posted':30, 'Latitude':10,'Longitude':10}
         
         for row in lt.iterator(total):
-            table.add_row([row['datetime'],row['city'],row['state'],row['country'],row['shape'],row['duration (seconds)'],row['duration (hours/min)'],row['comments'],row['date posted'], row['latitude'],row['longitude']])
+            table.add_row([row['datetime'],row['city'],row['state'],row['country'],row['shape'],row['duration (seconds)'],row['duration (hours/min)'],row['comments'],row['date posted'], round(float(row['latitude']),2),round(float(row['longitude']),2)])
         print('Primeros y ultimos 5 avistamientos son: \n')
         print(table)
+        print("The processing time is: ",end_time, " ms.")
         
     elif entry == 2:
         print('La altura del arbol es: ',str(om.height(catalog['cities'])))
         print('El tamaño del arbol es de :',str(om.size(catalog['cities'])))
+        city=input('Ciudad que desea consultar: ')
+        start_time = time.process_time()
+        result=controller.getCitySightings(catalog,city)
+        cities=catalog['cities']
+        end_time=(time.process_time() - start_time)*1000
+
+        print('='*15,'Req No. 1 Inputs','='*15)
+        print('UFO sightings in the city of:', city)
+        print('='*15,'Req No. 1 Answers','='*15)
+        print('There are',int(lt.size(om.keySet(cities))),'diferent cities with UFO sightings...')
+
+        print('The city with most UFO sightings is:')
+        table1=PrettyTable(hrules=pt.ALL)
+        table1.field_names = ['City','Count']
+        table1.add_row([result[3],result[2]])
+        print(table1)
+
+        print('The first 3 and last 3 UFO sightings in the duration time are:')
+        table2=PrettyTable(hrules=pt.ALL)
+        table2.field_names = ['DateTime','City','State','Country','Shape','Duration (seconds)']
+        for row in lt.iterator(result[1]):
+            table2.add_row([row['datetime'],row['city'],row['state'],row['country'],row['shape'],row['duration (seconds)']])
+        table2._max_width={'DateTime':30,'City':30,'State':30,'Country':30,'Shape':30,'Duration (seconds)':30}
+        print(table2)
+        print("The processing time is: ",end_time, " ms.")
         pass
     elif entry == 3:
         inf=float(input('Limite inferior de la duracion del avistamiento: '))
@@ -132,7 +160,7 @@ while True:
 
         print('The oldest UFO sightings date is:')
         table1=PrettyTable(hrules=pt.ALL)
-        table1.field_names = ['Duration (seconds)','Count']
+        table1.field_names = ['Date','Count']
         table1.add_row([longest,longest_count])
         print(table1)
 

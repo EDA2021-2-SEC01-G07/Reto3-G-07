@@ -23,6 +23,7 @@
 import config as cf
 import csv
 import model.catalog as ct
+import model.req1 as rq1
 import model.req2 as rq2
 import model.req4 as rq4
 import datetime
@@ -43,7 +44,7 @@ def loadData(catalog):
     Carga los datos de los archivos y cargar los datos en la
     estructura de datos
     """
-    ufofile = cf.data_dir + 'UFOS-utf8-small.csv'
+    ufofile = cf.data_dir + 'UFOS-utf8-large.csv'
     input_file = csv.DictReader(open(ufofile, encoding='utf-8'))
     for sighting in input_file:
         ct.addSighting(catalog, sighting)
@@ -52,6 +53,8 @@ def loadData(catalog):
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo
+def getCitySightings(catalog,city):
+    return rq1.getCitySightings(catalog,city)
 def getDurationRange(catalog,inf,sup):
     return rq2.getDurationRange(catalog,inf,sup)
 
