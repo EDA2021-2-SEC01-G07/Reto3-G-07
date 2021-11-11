@@ -3,9 +3,10 @@ import config as cf
 from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
 from DISClib.DataStructures import mapentry as me
-from DISClib.Algorithms.Sorting import shellsort as sa
+from DISClib.Algorithms.Sorting import mergesort as ms
 from DISClib.ADT import orderedmap as om
 import model.comp as cp
+import datetime
 
 def getHourRange(catalog, initial, final):
 
@@ -32,6 +33,10 @@ def getElementsDeepList(lst,index,size,backwards):
 
     while lt.size(elements_obtained) < size and index <= lt.size(lst):
         element_to_check = lt.getElement(lst, index)
+        ms.sort(element_to_check, 
+        lambda element1, element2: datetime.datetime.strptime(element1['datetime'],'%Y-%m-%d %H:%M:%S') <
+         datetime.datetime.strptime(element2['datetime'],'%Y-%m-%d %H:%M:%S'))
+        
         element_iterator = lt.iterator(element_to_check)
 
         next_value = next(element_iterator, None)
