@@ -34,7 +34,7 @@ def getLocationRange(catalog, ltmin, ltmax, lgmin, lgmax):
     for value in lt.iterator(last_samples):
         lt.addLast(samples, value)
     
-    return samples ,lt.size(values)
+    return samples, lt.size(values)
 
         
     

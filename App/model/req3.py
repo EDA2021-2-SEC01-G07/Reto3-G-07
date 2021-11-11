@@ -24,7 +24,7 @@ def getHourRange(catalog, initial, final):
     for value in lt.iterator(last_values):
         lt.addLast(total_values, value)
     
-    return total_values, om.size(range_values)
+    return total_values, lt.size(range_values)
 
 
 def getElementsDeepList(lst,index,size,backwards):
@@ -40,7 +40,7 @@ def getElementsDeepList(lst,index,size,backwards):
             lt.addLast(elements_obtained, next_value)
             next_value = next(element_iterator, None)
 
-        index += 1 if backwards else -1
+        index = index-1 if backwards else index+1
     
     return elements_obtained
     
