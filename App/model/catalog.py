@@ -38,6 +38,7 @@ def addSighting(catalog, sighting):
     updateDurationIndex(catalog['duration'],sighting )
     updateDateIndex(catalog['dates'],sighting)
     updateHourIndex(catalog['hours'],sighting)
+    updateLocationIndex(catalog['latitude'],sighting)
     return catalog
 
 def updateDurationIndex(map, sighting):
@@ -102,7 +103,7 @@ def updateLocationIndex(map,sighting):
 
     En caso de que no, crea el nodo y actualiza el indice de tipo date.
     """
-    ufolatitude=sighting['latitude']
+    ufolatitude=round(float(sighting['latitude']), 2)
 
     entry = om.get(map, ufolatitude)
     if entry != None:

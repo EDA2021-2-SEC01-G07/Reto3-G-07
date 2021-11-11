@@ -18,7 +18,8 @@ def getLocationRange(catalog, ltmin, ltmax, lgmin, lgmax):
     for list in lt.iterator(latitude_values):
         filtered_list = lt.newList(datastructure='ARRAY_LIST')
         for value in lt.iterator(list):
-            if value > lgmin and value < lgmax:
+            longitude_float = round(float(value['longitude']), 2)
+            if longitude_float > lgmax and longitude_float < lgmin:
                 lt.addLast(filtered_list, value)
         ms.sort(filtered_list, lambda value1, value2: float(value1['longitude']) > float(value2['longitude']))
         for value in lt.iterator(filtered_list):
@@ -26,7 +27,7 @@ def getLocationRange(catalog, ltmin, ltmax, lgmin, lgmax):
     
     samples = lt.subList(values, 1, 5)
 
-    last_samples = lt.subList(values, lt.size(values)-2, 5)
+    last_samples = lt.subList(values, lt.size(values)-4, 5)
 
     for value in lt.iterator(last_samples):
         lt.addLast(samples, value)
