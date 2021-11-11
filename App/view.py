@@ -142,9 +142,33 @@ while True:
     elif entry == 4:
         inf=input('Limite inferior del rango: ')
         sup=input('Limite superior del rango: ')
+        hours = catalog['hours']
         start_time = time.process_time()
-        controller.getHourRange(catalog,inf,sup)
+        result=controller.getHourRange(catalog,inf,sup)
         end_time=(time.process_time() - start_time)*1000
+
+        print('='*15,'Req No. 3 Inputs','='*15)
+        print('UFO sightings between', inf,'and',sup,'\n')
+        print('='*15,'Req No. 3 Answers','='*15)
+        print('There are',int(lt.size(om.keySet(hours))),'diferent durations of UFO sightings...')
+
+        print('The latests UFO sighting is:')
+        longest=om.maxKey(hours)
+        longest_count=lt.size(om.get(hours,longest)['value'])
+        end_time=(time.process_time() - start_time)*1000
+        table1=PrettyTable(hrules=pt.ALL)
+        table1.field_names = ['Duration (seconds)','Count']
+        table1.add_row([longest,longest_count])
+        print(table1)
+
+        print('\nThere are',str(result[1]),'sightings between', inf,'and',sup)
+        print('The first 3 and last 3 UFO sightings in the duration time are:')
+        table2=PrettyTable(hrules=pt.ALL)
+        table2.field_names = ['DateTime','City','State','Country','Shape','Duration (seconds)']
+        for row in lt.iterator(result[0]):
+            table2.add_row([row['datetime'],row['city'],row['state'],row['country'],row['shape'],row['duration (seconds)']])
+        table2._max_width={'DateTime':30,'City':30,'State':30,'Country':30,'Shape':30,'Duration (seconds)':30}
+        print(table2)
         print("The processing time is: ",end_time, " ms.")
         pass
 
