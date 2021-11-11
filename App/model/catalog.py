@@ -15,7 +15,6 @@ def newCatalog():
         "hours": om.newMap(omaptype='RDT',comparefunction=cp.compareHours),
         "dates": om.newMap(omaptype='RDT',comparefunction=cp.compareDates),
         "latitude": om.newMap(omaptype='RDT',comparefunction=cp.comparePrimitives),
-        "longitude": om.newMap(omaptype='RDT',comparefunction=cp.comparePrimitives),
         "sightings": lt.newList(datastructure='ARRAY_LIST')
     }
     return catalog
@@ -84,12 +83,31 @@ def updateHourIndex(map,sighting):
     En caso de que no, crea el nodo y actualiza el indice de tipo date.
     """
     ufodatetime=sighting['datetime']
-    ufodate= datetime.datetime.strptime(ufodatetime.split(" ")[1], '%H:%M:%S')
-    entry = om.get(map,ufodate.date())
+    ufodate= datetime.datetime.strptime(ufodatetime.split(" ")[1], '%H:%M:%S').time()
+    entry = om.get(map,ufodate)
     if entry != None:
         date_entry=me.getValue(entry)
     else:
         date_entry = lt.newList(datastructure="ARRAY_LIST")
-        om.put(map, ufodate.date(), date_entry)
+        om.put(map, ufodate, date_entry)
     lt.addLast(date_entry,sighting)
+    return map
+
+def updateLocationIndex(map,sighting):
+    """
+    Se toma solo el dia del avistamiento y se busca si ya existe dentro del arbol.
+    En caso de que si se adiciona a su su lista de avistamientos y se actualiza el indice.
+
+    En caso de que no, crea el nodo y actualiza el indice de tipo date.
+    """
+    ufolatitude=sighting['latitude']
+
+    entry = om.get(map, ufolatitude)
+    if entry != None:
+        date_entry=me.getValue(entry)
+    else:
+        date_entry = lt.newList(datastructure="ARRAY_LIST")
+        om.put(map, ufolatitude, date_entry)
+    lt.addLast(date_entry,sighting)
+
     return map
