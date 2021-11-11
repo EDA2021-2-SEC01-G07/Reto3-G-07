@@ -140,6 +140,12 @@ while True:
         print(table2)
         print("The processing time is: ",end_time, " ms.")
     elif entry == 4:
+        inf=input('Limite inferior del rango: ')
+        sup=input('Limite superior del rango: ')
+        start_time = time.process_time()
+        controller.getHourRange(catalog,inf,sup)
+        end_time=(time.process_time() - start_time)*1000
+        print("The processing time is: ",end_time, " ms.")
         pass
 
 
@@ -155,7 +161,7 @@ while True:
 
         print('='*15,'Req No. 4 Inputs','='*15)
         print('UFO sightings between', inf,'and',sup,'\n')
-        print('='*15,'Req No. 2 Answers','='*15)
+        print('='*15,'Req No. 4 Answers','='*15)
         print('There are',int(lt.size(om.keySet(dates))),' with diferent dates [YYYY-MM-DD]...')
 
         print('The oldest UFO sightings date is:')

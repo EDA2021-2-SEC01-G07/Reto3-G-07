@@ -25,6 +25,7 @@ import csv
 import model.catalog as ct
 import model.req1 as rq1
 import model.req2 as rq2
+import model.req3 as rq3
 import model.req4 as rq4
 import datetime
 """
@@ -57,6 +58,13 @@ def getCitySightings(catalog,city):
     return rq1.getCitySightings(catalog,city)
 def getDurationRange(catalog,inf,sup):
     return rq2.getDurationRange(catalog,inf,sup)
+
+def getHourRange(catalog,inf,sup):
+    initial = datetime.datetime.strptime(sup, '%H:%M').time()
+    final = datetime.datetime.strptime(inf, '%H:%M').time()
+    print(initial,final)
+    print(type(initial))
+    return rq3.getHourRange(catalog,initial,final)
 
 def getDateRange(catalog,sup,inf):
     initial = datetime.datetime.strptime(sup, '%Y-%m-%d').date()
