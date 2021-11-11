@@ -3,7 +3,6 @@ import config as cf
 from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
 from DISClib.DataStructures import mapentry as me
-from DISClib.Algorithms.Sorting import shellsort as sa
 from DISClib.ADT import orderedmap as om
 import model.comp as cp
 
@@ -20,7 +19,7 @@ def getDateRange(catalog,initial,final):
         totsights+=lt.size(sight)
         for a in lt.iterator(sight):
             if counter>3:
-                continue
+                break
             lt.addLast(match,a)
             counter+=1
 
@@ -32,7 +31,7 @@ def getDateRange(catalog,initial,final):
     while lt.size(last)<3: #SOLO en el caso donde la ultima llave no tenga 3 avistamientos, se recorre para atras las llaves
         for a in lt.iterator(lastIndex):
             if lt.size(last)==3:
-                continue
+                break
             lt.addFirst(last,a) 
         lastIndex=om.get(dates,lt.getElement(keyset,lt.size(keyset)-reverse_key))['value']
         reverse_key+=1

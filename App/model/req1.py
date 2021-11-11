@@ -25,12 +25,14 @@ def getCitySightings(catalog,city):
     max_sightings=0
     max_city=""
     #Para obtener la ciudad con mas cantidad de avistamientos toca recorrer todo el arbol.
+    #De esto se encarga el siguiente for-
     for c in lt.iterator(keyset):
         city_sightings=lt.size(om.get(cities, c)['value'])
         if city_sightings>max_sightings:
             max_sightings=city_sightings
             max_city=c
-
+            
+    #Añade todo los avistamientos de la ciudad ingresada a una lista.
     for sight in lt.iterator(selected_city):
         lt.addLast(match,sight)
     total=lt.size(match)
