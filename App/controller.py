@@ -63,8 +63,6 @@ def getDurationRange(catalog,inf,sup):
 def getHourRange(catalog,inf,sup):
     initial = datetime.datetime.strptime(inf, '%H:%M').time()
     final = datetime.datetime.strptime(sup, '%H:%M').time()
-    print(initial,final)
-    print(type(initial))
     return rq3.getHourRange(catalog,initial,final)
 
 def getDateRange(catalog,sup,inf):
