@@ -38,6 +38,7 @@ def addSighting(catalog, sighting):
     
     updateDurationIndex(catalog['duration'],sighting )
     updateDateIndex(catalog['dates'],sighting)
+    updateHourIndex(catalog['hours'],sighting)
     return catalog
 
 def updateDurationIndex(map, sighting):
@@ -66,6 +67,24 @@ def updateDateIndex(map,sighting):
     """
     ufodatetime=sighting['datetime']
     ufodate= datetime.datetime.strptime(ufodatetime, '%Y-%m-%d %H:%M:%S')
+    entry = om.get(map,ufodate.date())
+    if entry != None:
+        date_entry=me.getValue(entry)
+    else:
+        date_entry = lt.newList(datastructure="ARRAY_LIST")
+        om.put(map, ufodate.date(), date_entry)
+    lt.addLast(date_entry,sighting)
+    return map
+
+def updateHourIndex(map,sighting):
+    """
+    Se toma solo el dia del avistamiento y se busca si ya existe dentro del arbol.
+    En caso de que si se adiciona a su su lista de avistamientos y se actualiza el indice.
+
+    En caso de que no, crea el nodo y actualiza el indice de tipo date.
+    """
+    ufodatetime=sighting['datetime']
+    ufodate= datetime.datetime.strptime(ufodatetime.split(" ")[1], '%H:%M:%S')
     entry = om.get(map,ufodate.date())
     if entry != None:
         date_entry=me.getValue(entry)
