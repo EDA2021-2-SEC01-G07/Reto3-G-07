@@ -47,7 +47,7 @@ def printMenu():
     print("4- (Req3) Avistamientos por hora/minuto del dia")
     print("5- (Req4) Avistamientos por rango de fechas")
     print("6- (Req5) Avistamientos por zona geografia")
-    print("7- (Req6) Visualizar avistamientos de una zona geografica")
+    print("7- (Bono) Visualizar avistamientos de una zona geografica")
     print("")
 
 catalog = None
@@ -181,6 +181,18 @@ while True:
         print(table2)
         
         print("The processing time is: ",end_time, " ms.")
+    elif entry == 6:
+        ltmin=round(float(input('Ingrese la latitud minima: ')),2)
+        ltmax=round(float(input('Ingrese la latitud maxima: ')),2)
+        lgmin=round(float(input('Ingrese la longitud minima: ')),2)
+        lgmax=round(float(input('Ingrese la longitud maxima: ')),2)
+        start_time = time.process_time()
+        controller.getLocationRange(catalog, ltmin, ltmax, lgmin, lgmax)
+        end_time=(time.process_time() - start_time)*1000
+        
+        print("The processing time is: ",end_time, " ms.")
+    elif entry==7:
+        print('No')
     else:
         sys.exit(0)
 sys.exit(0)

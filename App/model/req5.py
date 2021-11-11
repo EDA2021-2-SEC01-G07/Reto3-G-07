@@ -10,16 +10,13 @@ import model.comp as cp
 def getLocationRange(catalog, ltmin, ltmax, lgmin, lgmax):
 
     latitude = catalog['latitude']
-    longitude = catalog['longitude']
 
-    total_sightings = lt.newList('ARRAY_LIST')
-
-    values = lt.newList('ARRAY_LIST')
+    values = lt.newList(datastructure='ARRAY_LIST')
 
     latitude_values = om.values(latitude, ltmin, ltmax)
 
     for list in lt.iterator(latitude_values):
-        filtered_list = lt.newList('ARRAY_LIST')
+        filtered_list = lt.newList(datastructure='ARRAY_LIST')
         for value in lt.iterator(list):
             if value > lgmin and value < lgmax:
                 lt.addLast(filtered_list, value)

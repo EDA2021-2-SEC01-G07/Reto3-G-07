@@ -27,6 +27,7 @@ import model.req1 as rq1
 import model.req2 as rq2
 import model.req3 as rq3
 import model.req4 as rq4
+import model.req5 as rq5
 import datetime
 """
 El controlador se encarga de mediar entre la vista y el modelo.
@@ -45,7 +46,7 @@ def loadData(catalog):
     Carga los datos de los archivos y cargar los datos en la
     estructura de datos
     """
-    ufofile = cf.data_dir + 'UFOS-utf8-large.csv'
+    ufofile = cf.data_dir + 'UFOS-utf8-small.csv'
     input_file = csv.DictReader(open(ufofile, encoding='utf-8'))
     for sighting in input_file:
         ct.addSighting(catalog, sighting)
@@ -70,3 +71,6 @@ def getDateRange(catalog,sup,inf):
     initial = datetime.datetime.strptime(sup, '%Y-%m-%d').date()
     final = datetime.datetime.strptime(inf, '%Y-%m-%d').date()
     return rq4.getDateRange(catalog,initial,final)
+
+def getLocationRange(catalog, ltmin, ltmax, lgmin, lgmax):
+    return rq5.getLocationRange(catalog, ltmin, ltmax, lgmin, lgmax)
