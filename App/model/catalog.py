@@ -83,7 +83,9 @@ def updateHourIndex(map,sighting):
     En caso de que no, crea el nodo y actualiza el indice de tipo date.
     """
     ufodatetime=sighting['datetime']
-    ufodate= datetime.datetime.strptime(ufodatetime.split(" ")[1], '%H:%M:%S').time()
+    ufotextdate = ufodatetime.split(" ")[1].split(':')
+    ufotextdate = ufotextdate[0] + ':' + ufotextdate[1]
+    ufodate= datetime.datetime.strptime(ufotextdate, '%H:%M').time()
     entry = om.get(map,ufodate)
     if entry != None:
         date_entry=me.getValue(entry)
