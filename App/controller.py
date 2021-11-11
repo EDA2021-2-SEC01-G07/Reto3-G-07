@@ -46,7 +46,7 @@ def loadData(catalog):
     Carga los datos de los archivos y cargar los datos en la
     estructura de datos
     """
-    ufofile = cf.data_dir + 'UFOS-utf8-small.csv'
+    ufofile = cf.data_dir + 'UFOS-utf8-10pct.csv'
     input_file = csv.DictReader(open(ufofile, encoding='utf-8'))
     for sighting in input_file:
         ct.addSighting(catalog, sighting)

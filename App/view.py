@@ -211,8 +211,20 @@ while True:
         lgmin=round(float(input('Ingrese la longitud minima: ')),2)
         lgmax=round(float(input('Ingrese la longitud maxima: ')),2)
         start_time = time.process_time()
-        controller.getLocationRange(catalog, ltmin, ltmax, lgmin, lgmax)
+        result=controller.getLocationRange(catalog, ltmin, ltmax, lgmin, lgmax)
         end_time=(time.process_time() - start_time)*1000
+        print('='*15,'Req No. 5 Inputs','='*15)
+        print('UFO sightings between latitude range of', ltmin,'and',ltmax,
+        '\nplus longitud range of', lgmin,'and',lgmax)
+        print('='*15,'Req No. 5 Answers','='*15)
+        print('There are',int(result[1]),' different UFO sightings in the current area')
+        print('The first 5 and last 5 UFO sightings this time are:\n')
+        table2=PrettyTable(hrules=pt.ALL)
+        table2.field_names = ['DateTime','City','State','Country','Shape','Duration (seconds)','Latitude','Longitude']
+        for row in lt.iterator(result[0]):
+            table2.add_row([row['datetime'],row['city'],row['state'],row['country'],row['shape'],row['duration (seconds)'],row['latitude'],row['longitude']])
+        table2._max_width={'DateTime':30,'Date':20,'City':30,'State':30,'Country':30,'Shape':30,'Duration (seconds)':30}
+        print(table2)
         
         print("The processing time is: ",end_time, " ms.")
     elif entry==7:
